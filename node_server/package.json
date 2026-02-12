@@ -1,0 +1,14 @@
+{
+  "name": "chat-node",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.2.4",
+    "ioredis": "^5.9.3",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.18.0",
+    "ws": "^8.19.0"
+  }
+}
