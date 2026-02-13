@@ -3,10 +3,10 @@
  * Login form
  */ 
 
-if($_COOKIE['access_token']) {
+/*if($_COOKIE['access_token']) {
     header("Location: /");
     exit();
-}
+}*/
 ?>
 
 <!DOCTYPE html>
@@ -17,9 +17,12 @@ if($_COOKIE['access_token']) {
     <title>Chat App - Login</title>
 </head>
 <body>
+    <header>
+        <span id="connection">Offline</span>
+    </header>
     <main>
         <p>Login here!</p>
-        <form name="login_form" id="login_form">
+        <form name="login_form" id="login_form" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
             <br>
@@ -29,7 +32,7 @@ if($_COOKIE['access_token']) {
             <button type="submit">Login</button>
         </form>
         <p>Don't have an account?</p>
-        <form name="register_form" id="reg_form">
+        <form name="register_form" id="reg_form" method="post">
             <label for="reg_username">Username:</label>
             <input type="text" id="reg_username" name="username" required>
             <br>
@@ -42,5 +45,6 @@ if($_COOKIE['access_token']) {
             <button type="submit">Register</button>
         </form>
     </main>
+    <script src="/api/auth.js"></script>
 </body>
 </html>

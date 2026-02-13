@@ -1,4 +1,4 @@
-version: "3.9"
+version: "v1.0.0"
 
 services:
   apache-php:
@@ -30,14 +30,14 @@ services:
     command: ["node", "src/index.js"]
 
   postgres:
-    image: postgres:16
+    image: postgres:18.1
     container_name: chat-db
     env_file:
       - .env
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - ./pgdata:/var/lib/postgresql:Z
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   redis:

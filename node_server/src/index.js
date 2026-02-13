@@ -1,5 +1,6 @@
 // node-server/src/index.js
 import { WebSocketServer } from "ws";
+
 import pool from "./db.js";
 import { login, register } from "./auth.js";
 
@@ -18,7 +19,7 @@ const wss = new WebSocketServer({
 });
 
 wss.on("connection", (ws, req) => {
-  console.log("WS client connected");
+  console.log("New client connected:", req.socket.remoteAddress);
 
   ws.on("message", async (msg) => {
     let data;

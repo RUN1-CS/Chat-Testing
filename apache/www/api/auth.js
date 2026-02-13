@@ -6,13 +6,13 @@ WebSocket.onopen = function () {
   connection.innerText = "Connected";
 };
 
-const login = document.getElementById("login-form");
-const register = document.getElementById("reg-form");
+const login = document.getElementById("login_form");
+const register = document.getElementById("reg_form");
 
 login.addEventListener("submit", function (e) {
   e.preventDefault();
-  const username = document.getElementById("login-username").value;
-  const password = document.getElementById("login-password").value;
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
 
   WebSocket.send(
     JSON.stringify({
@@ -25,10 +25,10 @@ login.addEventListener("submit", function (e) {
 
 register.addEventListener("submit", function (e) {
   e.preventDefault();
-  const username = document.getElementById("reg-username").value;
-  const password = document.getElementById("reg-password").value;
+  const username = document.getElementById("reg_username").value;
+  const password = document.getElementById("reg_password").value;
   const password_confirm = document.getElementById(
-    "reg-password-confirm",
+    "reg_confirm_password",
   ).value;
 
   if (password !== password_confirm) {
@@ -47,7 +47,7 @@ register.addEventListener("submit", function (e) {
 WebSocket.onmessage = function (event) {
   const data = JSON.parse(event.data);
   switch (data.type) {
-    case login_response:
+    case "login_response":
       if (data.success) {
         alert("Login successful!");
         document.getElementsByClassName("yourself")[0].id = data.user.id;
@@ -58,7 +58,7 @@ WebSocket.onmessage = function (event) {
         alert("Login failed: " + data.message);
       }
       break;
-    case register_response:
+    case "register_response":
       if (data.success) {
         alert("Registration successful!");
         document.getElementsByClassName("yourself")[0].id = data.user.id;
