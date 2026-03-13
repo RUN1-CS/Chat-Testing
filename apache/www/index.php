@@ -18,8 +18,15 @@
         <span id="connection">Offline</span>
     </header>
     <main>
+        <h2>Global Chat</h2>
+        <button id="gc">Join Global Chat</button>
+        <script>
+            document.getElementById("gc").addEventListener("click", function() {
+                window.location.href = "/chat.php?chat=global";
+            });
+        </script>
         <h2>Direct Messages</h2>
-        <button class="user yourself" id="placeholder"></button>
+        <button class="user yourself" id="placeholder">YOU</button>
         <h2>Rooms</h2>
         <!-- To be integrated -->
         <h2>Add Friends</h2>
@@ -31,6 +38,6 @@
             <button type="submit">Add Friend</button>
         </form>
         </main>
-    <script src="/js/index.js"></script>
+    <script src="/js/index.js" type="module"></script>
 </body>
 </html>

@@ -1,34 +1,19 @@
-WebSocket = new WebSocket("ws://localhost:8080/ws");
-
-WebSocket.onopen = function () {
-  document.getElementById("connection").innerText = "Connected";
-};
-
+import { fetch_user } from "./index.js";
 // WIP
 // TODO: E2EE integration
 // TODO: Rooms
 document
   .getElementById("message-form")
-  .addEventListener("submit", function (event) {
+  .addEventListener("submit", async function (event) {
     event.preventDefault();
+    const user = await fetch_user();
     WebSocket.send(
       JSON.stringify({
         type: "message",
+        sender: user !== undefined ? user : "guest",
         reciever: document.getElementById("to-field").value,
         content: document.getElementById("message-input").value,
       }),
     );
     document.getElementById("message-input").value = "";
   });
-
-WebSocket.onmessage = function (event) {
-  const data = JSON.parse(event.data);
-  switch (data.type) {
-    case "message":
-      const messageList = document.getElementById("message-history");
-      const messageItem = document.createElement("li");
-      messageItem.textContent = `${data.sender}: ${data.content}`;
-      messageList.appendChild(messageItem);
-      break;
-  }
-};

@@ -55,7 +55,7 @@ WebSocket.onmessage = function (event) {
           data.user.name;
         data.cookie && (document.cookie = data.cookie);
       } else {
-        alert("Login failed: " + data.message);
+        alert(data.message);
       }
       break;
     case "register_response":
@@ -65,7 +65,7 @@ WebSocket.onmessage = function (event) {
         document.getElementsByClassName("yourself")[0].innerText =
           data.user.name;
       } else {
-        alert("Registration failed: " + data.message);
+        alert(data.message);
       }
       break;
   }

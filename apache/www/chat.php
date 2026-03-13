@@ -14,6 +14,9 @@
     <title id="tab-title">Chat App - Chat</title>
 </head>
 <body>
+    <header>
+        <span id="connection">Offline</span>
+    </header>
     <aside id="chats">
         <h3>Chats</h3>
     </aside>
@@ -23,11 +26,11 @@
     <form id="message-form">
         <input type="hidden" name="action" value="send_message">
         <input type="hidden" name="from" value="/chat.php">
-        <input type="hidden" name="to" id="to-field" value="">
+        <input type="hidden" name="to" id="to-field" value="<?= htmlspecialchars($_GET['chat'] ?? '') ?>">
         <textarea name="message" id="message-input" placeholder="Type your message here..." required></textarea>
         <button type="submit">Send</button>
     </form>
-    <script src="/js/index.js"></script>
-    <script src="/js/chat.js"></script>
+    <script src="/js/index.js" type="module"></script>
+    <script src="/js/chat.js" type="module"></script>
 </body>
 </html>

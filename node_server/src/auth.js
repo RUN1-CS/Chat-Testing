@@ -68,6 +68,7 @@ export async function register(username, password) {
           "Registration succeeded but login failed: " + login_data.message,
       };
     }
+    console.log("User registered:", user.username);
     return {
       success: true,
       user,
@@ -75,6 +76,7 @@ export async function register(username, password) {
       jti: login_data.jti,
     };
   } catch (err) {
+    console.error("Error during registration:", err);
     return { success: false, message: "Registration failed: " + err.message };
   }
 }
