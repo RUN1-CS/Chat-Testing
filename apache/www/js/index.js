@@ -77,6 +77,10 @@ WebSocket.onmessage = async function (event) {
 
 WebSocket.onclose = function () {
   connection.innerText = "Disconnected";
+  console.log("Retrying connection in 5 seconds...");
+  setTimeout(() => {
+    location.reload();
+  }, 5000);
 };
 
 document.addEventListener("DOMContentLoaded", function () {

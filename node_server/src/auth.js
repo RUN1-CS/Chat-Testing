@@ -5,19 +5,33 @@ import crypto from "crypto";
 import { storeSession } from "./tokens.js";
 
 async function fetch_user(username) {
-  const res = await pool.query(
-    "SELECT id, password_hash FROM users WHERE username = $1",
-    [username],
-  );
-  return res.rows[0];
+  try {
+    const client = await pool.connect();
+    const res = await client.query(
+      "SELECT id, password_hash FROM users WHERE username = $1",
+      [username],
+    );
+    client.release();
+    return res.rows[0];
+  } catch (e) {
+    console.error("DB Connection error:", e);
+    return;
+  }
 }
 
 async function insert_user(username, password_hash) {
-  const res = await pool.query(
-    "INSERT INTO users (username, password_hash) VALUES ($1, $2) RETURNING id, name",
-    [username, password_hash],
-  );
-  return res.rows[0];
+  try {
+    const client = await pool.connect();
+    const res = await client.query(
+      "INSERT INTO users (username, password_hash) VALUES ($1, $2) RETURNING id, name",
+      [username, password_hash],
+    );
+    client.release();
+    return res.rows[0];
+  } catch (e) {
+    console.error("DB Connection error:", e);
+    return;
+  }
 }
 
 async function issueJWT(user) {

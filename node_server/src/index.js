@@ -13,11 +13,18 @@ const wss = new WebSocketServer({
 });
 
 async function fetch_user(session) {
-  const res = await pool.query(
-    "SELECT id, name FROM users WHERE session = $1",
-    [session],
-  );
-  return res.rows[0];
+  try {
+    const client = await pool.connect();
+    const res = await client.query(
+      "SELECT id, name FROM users WHERE session = $1",
+      [session],
+    );
+    client.release();
+    return res.rows[0];
+  } catch (e) {
+    console.error("DB error:", e);
+    return;
+  }
 }
 
 wss.on("connection", (ws, req) => {
