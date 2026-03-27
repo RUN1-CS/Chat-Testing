@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import { storeSession } from "./tokens.js";
 
-async function fetch_user(username) {
+async function fetch_user_usrn(username) {
   try {
     const client = await pool.connect();
     const res = await client.query(
@@ -55,7 +55,7 @@ async function issueJWT(user) {
 }
 
 export async function login(username, password) {
-  const user = await fetch_user(username);
+  const user = await fetch_user_usrn(username);
   if (!user) {
     return { success: false, message: "User not found" };
   }

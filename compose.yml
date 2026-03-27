@@ -47,7 +47,5 @@ services:
       - "6379:6379"
     volumes:
       - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./redis/data:/data:Z
     command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
-
-volumes:
-  pgdata:

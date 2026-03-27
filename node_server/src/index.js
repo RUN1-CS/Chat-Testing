@@ -12,7 +12,7 @@ const wss = new WebSocketServer({
   path: "/ws",
 });
 
-async function fetch_user(session) {
+async function fetch_user_ses(session) {
   try {
     const client = await pool.connect();
     const res = await client.query(
@@ -36,7 +36,7 @@ wss.on("connection", (ws, req) => {
         type: "message",
         sender: "System",
         reciever: "global",
-        content: `New client connected: ${/*fetch_user(req.headers.cookie) ||*/ "guest"}`,
+        content: `New client connected: ${/*fetch_user_ses(req.headers.cookie) ||*/ "guest"}`,
       }),
     );
   }
@@ -55,7 +55,7 @@ wss.on("connection", (ws, req) => {
         ws.send(
           JSON.stringify({
             type: "user_data",
-            user: await fetch_user(data.session),
+            user: await fetch_user_ses(data.session),
           }),
         );
         break;
