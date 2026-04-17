@@ -1,9 +1,9 @@
-import jwt from "jsonwebtoken";
-import Redis from "ioredis";
+const jwt = require("jsonwebtoken");
+const Redis = require("ioredis");
 
-export const redis = new Redis(process.env.REDIS_URL);
+const redis = new Redis(process.env.REDIS_URL);
 
-export function verifyJWT(token) {
+function verifyJWT(token) {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     return { valid: true, decoded };
@@ -12,14 +12,16 @@ export function verifyJWT(token) {
   }
 }
 
-export async function storeSession(jti, ttlSeconds) {
+async function storeSession(jti, ttlSeconds) {
   await redis.setex(`jwt:${jti}`, ttlSeconds, "1");
 }
 
-export async function isSessionValid(jti) {
+async function isSessionValid(jti) {
   return await redis.exists(`jwt:${jti}`);
 }
 
-export async function revokeSession(jti) {
+async function revokeSession(jti) {
   await redis.del(`jwt:${jti}`);
 }
+
+module.exports = { verifyJWT, storeSession, isSessionValid, revokeSession };

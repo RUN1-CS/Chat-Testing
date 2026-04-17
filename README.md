@@ -27,7 +27,7 @@ It's designed to be ez to modify and take you through your chat making journey.
 Everything runs on Docker.
 
 ```bash
-git clone https://github.com/RUN1-CS/Dashboard.git
+git clone git@github.com:RUN1-CS/Chat-Testing.git
 cd Chat-Testing
 cp .env.example .env
 # Enter credentials

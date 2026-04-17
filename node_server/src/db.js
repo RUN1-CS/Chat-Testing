@@ -1,19 +1,17 @@
-import pkg from "pg";
-import dotenv from "dotenv";
+const pg = require("pg");
+const dotenv = require("dotenv");
 
 dotenv.config();
-const { Pool } = pkg;
 
-const pool = new Pool({
-  host: process.env.DB_HOST,
-  port: Number(process.env.DB_PORT || 5432),
-  database: process.env.DB_NAME,
+const config = {
   user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
-  max: 20, // maximum number of clients in the pool
-  idleTimeoutMillis: 30000, // close idle clients after 30 seconds
-  connectionTimeoutMillis: 30000, // return an error after 2 seconds if connection could not be established
-});
+  port: Number(process.env.DB_PORT || 5432),
+};
+
+const pool = new pg.Pool(config);
 
 pool.on("connect", () => {
   console.log("Connected to the database");
@@ -24,4 +22,4 @@ pool.on("error", (err) => {
   process.exit(-1);
 });
 
-export default pool;
+module.exports = { pool };

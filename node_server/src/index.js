@@ -1,10 +1,10 @@
 // node-server/src/index.js
 
 //TODO fix DB Connection
-import { WebSocketServer } from "ws";
+const WebSocketServer = require("ws");
 
-import pool from "./db.js";
-import { login, register } from "./auth.js";
+const pool = require("./db").pool;
+const { login, register } = require("./auth");
 
 const wss = new WebSocketServer({
   port: 3000,
@@ -14,12 +14,10 @@ const wss = new WebSocketServer({
 
 async function fetch_user_ses(session) {
   try {
-    const client = await pool.connect();
-    const res = await client.query(
+    const res = await pool.query(
       "SELECT id, name FROM users WHERE session = $1",
       [session],
     );
-    client.release();
     return res.rows[0];
   } catch (e) {
     console.error("DB error:", e);

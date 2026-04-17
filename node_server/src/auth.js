@@ -1,8 +1,8 @@
-import pool from "./db.js";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import crypto from "crypto";
-import { storeSession } from "./tokens.js";
+const pool = require("./db").pool;
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+const storeSession = require("./tokens").storeSession;
 
 async function fetch_user_usrn(username) {
   try {
@@ -54,7 +54,7 @@ async function issueJWT(user) {
   return { token, jti };
 }
 
-export async function login(username, password) {
+async function login(username, password) {
   const user = await fetch_user_usrn(username);
   if (!user) {
     return { success: false, message: "User not found" };
@@ -70,7 +70,7 @@ export async function login(username, password) {
   return { success: true, user, token: jwt_data.token, jti: jwt_data.jti };
 }
 
-export async function register(username, password) {
+async function register(username, password) {
   try {
     const hash = await bcrypt.hash(password, 10);
     const user = await insert_user(username, hash);
@@ -94,3 +94,5 @@ export async function register(username, password) {
     return { success: false, message: "Registration failed: " + err.message };
   }
 }
+
+module.exports = { login, register, fetch_user_usrn };
